@@ -29,7 +29,7 @@ public class PicServiceImpl implements PicService {
 
     @Override
     public List<Picture> getPics(int pageSize, int curPage) {
-        return picRepository.findAll(new PageRequest(curPage, pageSize, new Sort(Sort.Direction.DESC, "createtime"))).getContent();
+        return picRepository.findAll(new PageRequest(curPage, pageSize, new Sort(Sort.Direction.DESC, "createTime"))).getContent();
     }
 
     @Override

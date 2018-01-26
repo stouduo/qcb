@@ -18,6 +18,6 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                                         AuthenticationException exception) throws IOException, ServletException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        response.getWriter().write(JSON.toJSONString(RestResult.error("用户名或密码错误！")));
+        response.getWriter().write(JSON.toJSONString(RestResult.error("请输入正确的用户信息或验证码！")));
     }
 }

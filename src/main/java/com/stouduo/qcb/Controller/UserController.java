@@ -15,6 +15,7 @@ import java.io.ByteArrayOutputStream;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    @Autowired
     private DefaultKaptcha defaultKaptcha;
 
     @RequestMapping("/captcha")
