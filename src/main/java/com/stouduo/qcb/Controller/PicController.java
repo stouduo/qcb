@@ -32,7 +32,7 @@ public class PicController {
 
     @ResponseBody
     @PostMapping("/uploadPic")
-    public RestResult uploadPic(MultipartFile file) {
+    public RestResult uploadPic(@RequestParam("pic") MultipartFile file) {
         try {
             picService.uploadPic(file);
             return RestResult.ok("上传成功");
@@ -41,7 +41,7 @@ public class PicController {
         }
     }
 
-    @GetMapping("/{id}.qc")
+    @GetMapping("/{id}")
     public void getPic(@PathVariable String id, HttpServletResponse response) {
         try (OutputStream outStream = response.getOutputStream()) {
             picService.getPic(id).writeTo(outStream);

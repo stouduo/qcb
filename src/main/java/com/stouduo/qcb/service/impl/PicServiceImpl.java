@@ -6,6 +6,7 @@ import com.stouduo.qcb.repository.PicMonogodbRepository;
 import com.stouduo.qcb.repository.PicRepository;
 import com.stouduo.qcb.service.PicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,8 @@ public class PicServiceImpl implements PicService {
     @Autowired
     private PicMonogodbRepository picMonogodbRepository;
     private final static String PIC_REST_API_PRE = "/pic/";
-    private final static String PIC_REST_API_END = "\\.qc";
+    @Value("${img.server.url:http://localhost:9090}")
+    private String imgServerUrl;
 
     @Override
     public List<Picture> getPics(int pageSize, int curPage) {
@@ -50,7 +52,7 @@ public class PicServiceImpl implements PicService {
         picture.setName(file.getName());
         picture.setSize(file.getSize());
         picture = picRepository.save(picture);
-        picture.setUrl(PIC_REST_API_PRE + picture.getId() + PIC_REST_API_END);
+        picture.setSrc(imgServerUrl + PIC_REST_API_PRE + picture.getId());
         picRepository.save(picture);
         picMonogodbRepository.savePic(file.getInputStream(), picture.getId());
     }

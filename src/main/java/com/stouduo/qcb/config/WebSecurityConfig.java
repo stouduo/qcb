@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -68,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.setCharacterEncoding("UTF-8");
                     response.setContentType("application/json");
                     response.getWriter().write(JSON.toJSONString(RestResult.error("没有权限！")));
-                })
+                }).authenticationEntryPoint(loginUrlAuthenticationEntryPoint())
                 .and().authorizeRequests()
                 .antMatchers("/user/captcha", "/login").permitAll()
                 .anyRequest().hasRole("USER")
@@ -91,5 +92,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() {
         return new CustomAuthenticationFailureHandler();
+    }
+
+    @Bean
+    public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
+        return new CustomAuthenticationEntryPoint("/");
     }
 }
