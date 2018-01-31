@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.getWriter().write(JSON.toJSONString(RestResult.error("没有权限！")));
                 }).authenticationEntryPoint(loginUrlAuthenticationEntryPoint())
                 .and().authorizeRequests()
-                .antMatchers("/user/captcha", "/login").permitAll()
+                .antMatchers("/user/captcha","/","/**/*.js","/**/*.css", "/login","/pic/getPics").permitAll()
                 .anyRequest().hasRole("USER")
                 .and().addFilterAt(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).formLogin().permitAll()
                 .and().logout().logoutSuccessHandler(
